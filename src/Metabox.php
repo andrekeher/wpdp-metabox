@@ -21,18 +21,17 @@ class Metabox
     {
         add_action('add_meta_boxes', function () {
             if (empty($this->formFunction)) {
-                $this->formFunction = function () {};
+                $this->formFunction = function () {
+                };
             }
-            add_meta_box($this->id, $this->title, $this->formFunction, $this->postType); }
-        );
+            add_meta_box($this->id, $this->title, $this->formFunction, $this->postType);
+        });
         add_action('save_post', function () {
             global $typenow;
-            if ((defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) || (defined('DOING_AJAX') && DOING_AJAX))
-            {
+            if ((defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) || (defined('DOING_AJAX') && DOING_AJAX)) {
                 return false;
             }
-            if ($_POST && in_array($typenow, $this->postType))
-            {
+            if ($_POST && in_array($typenow, $this->postType)) {
                 call_user_func($this->saveFunction);
             }
         });
